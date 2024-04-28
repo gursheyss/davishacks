@@ -7,7 +7,6 @@
 	import { enhance } from '$app/forms';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
-	import Map from './Map.svelte';
 
 	interface ProfileInfo {
 		email: string | undefined;
@@ -72,5 +71,3 @@
 		</Card.Footer>
 	</Card.Root>
 </form>
-
-<Map />
