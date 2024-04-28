@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
+	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -51,6 +52,17 @@
 				<div class="flex flex-col space-y-2">
 					<Label for="lastName">Last Name</Label>
 					<Input id="lastName" placeholder="Your last name" name="lastName" bind:value={lastName} />
+				</div>
+				<div class="flex flex-col space-y-2">
+					<Label for="location">Location</Label>
+					<Select.Root>
+						<Select.Trigger class="w-full">
+							<Select.Value placeholder="UC Davis" />
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Item value="ucdavis">UC Davis</Select.Item>
+						</Select.Content>
+					</Select.Root>
 				</div>
 			</div>
 		</Card.Content>

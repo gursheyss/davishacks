@@ -13,6 +13,12 @@ export const load = async ({ locals: { safeGetSession, supabase } }) => {
 		.eq('email', email)
 		.single();
 
+	console.log(data);
+
+	if (error) {
+		console.error('error', error);
+	}
+
 	return {
 		profileData: data
 	};
