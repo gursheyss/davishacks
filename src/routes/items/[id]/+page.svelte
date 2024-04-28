@@ -19,18 +19,8 @@
 	}
 
 	// Example data
-	const item = {
-		id: 1,
-		profile_id: '107e6e99-ac29-4c5c-8ded-764dc0b27353',
-		title: 'Epic Bike',
-		description: 'A fuckin bike to let you ride around school',
-		category: 'Bike',
-		image_urls: [
-			'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969'
-		],
-		status: 'Available',
-		created_at: '2024-04-28T09:51:15.869674'
-	};
+	export let data;
+	let item = data.item;
 </script>
 
 <div class="flex flex-col items-start justify-center gap-8 pl-6 md:flex-row">

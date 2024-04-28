@@ -8,6 +8,6 @@ export const load = async ({ params, locals: { supabase } }) => {
 	}
 	console.log(data);
 	return {
-		data
+		item: data
 	};
 };
