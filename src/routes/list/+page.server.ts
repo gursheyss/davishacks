@@ -8,7 +8,7 @@ export const load = async ({ locals: { safeGetSession } }) => {
 };
 
 export const actions = {
-	default: async ({ request, locals: { supabase, safeGetSession } }) => {
+	list: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const session = await safeGetSession();
 		if (!session.user) {
 			redirect(301, '/login');

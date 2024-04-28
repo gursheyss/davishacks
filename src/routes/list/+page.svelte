@@ -28,8 +28,9 @@
 	<h2 class="mb-6 text-2xl font-bold">Upload Item</h2>
 	<form
 		method="POST"
+		action="?/list"
+		enctype="multipart/form-data"
 		use:enhance={() => {
-			isLoading = true;
 			return async ({ result }) => {
 				if (result.type === 'success') {
 					isLoading = false;
