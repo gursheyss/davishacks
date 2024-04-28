@@ -19,11 +19,7 @@ export const actions = {
 		const description = formData.get('description') as string;
 		const category = formData.get('category') as string;
 		const images = formData.getAll('images') as File[];
-
-		console.log('title:', title);
-		console.log('description:', description);
-		console.log('category:', category);
-		console.log('images:', images);
+		const condition = formData.get('condition') as string;
 
 		const imageUrls: string[] = [];
 
@@ -33,7 +29,8 @@ export const actions = {
 				profile_id: session.user.id,
 				title,
 				description,
-				category
+				category,
+				condition
 			})
 			.select('id')
 			.single();
@@ -58,8 +55,13 @@ export const actions = {
 				return error(500, 'Error uploading image: ' + uploadError.message);
 			}
 
-			imageUrls.push(uploadData.path);
+			imageUrls.push(
+				'https://magxivgndfjxtpfszveg.supabase.co/storage/v1/object/public/images/' +
+					uploadData.path
+			);
 		}
+
+		console.log('imageUrls:', imageUrls);
 
 		const { error: updateError } = await supabase
 			.from('items')

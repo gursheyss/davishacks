@@ -4,28 +4,31 @@
 	import type { CarouselAPI } from '$lib/components/ui/carousel/context.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
+	import { Input } from '$lib/components/ui/input';
+	import * as Select from '$lib/components/ui/select/index.js';
+	import { enhance } from '$app/forms';
 
-	let api: CarouselAPI;
-	let current = 0;
-	let count = 0;
-
-	$: if (api) {
-		count = api.scrollSnapList().length;
-		current = api.selectedScrollSnap() + 1;
-
-		api.on('select', () => {
-			current = api.selectedScrollSnap() + 1;
-		});
+	interface Item {
+		id: number;
+		profile_id: string;
+		title: string;
+		description: string;
+		category: string;
+		image_urls: string[];
+		status: string;
+		created_at: string;
 	}
 
-	// Example data
-	export let data;
-	let item = data.item;
+	let { data } = $props();
+
+	let { item }: { item: Item } = $derived(data);
+
+	let selectedItems = $state([]);
 </script>
 
 <div class="flex flex-col items-start justify-center gap-8 pl-6 md:flex-row">
 	<div class="w-full md:w-1/2">
-		<Carousel.Root bind:api class="relative h-64 w-full">
+		<Carousel.Root class="relative h-64 w-full">
 			<Carousel.Content>
 				{#each item.image_urls as url}
 					<Carousel.Item>
@@ -36,9 +39,6 @@
 			<Carousel.Previous />
 			<Carousel.Next />
 		</Carousel.Root>
-		<div class="py-2 text-center text-sm text-muted-foreground">
-			Image {current} of {count}
-		</div>
 	</div>
 	<div class="w-full space-y-6 md:w-1/2">
 		<Card.Root>
@@ -62,20 +62,38 @@
 			<Card.Content>
 				<Tabs.Root value="trade" class="w-full">
 					<Tabs.List class="grid grid-cols-2">
-						<Tabs.Trigger value="trade">Trade Offer</Tabs.Trigger>
-						<Tabs.Trigger value="cash">Cash Offer</Tabs.Trigger>
+						<Tabs.Trigger value="trade">Trade</Tabs.Trigger>
+						<Tabs.Trigger value="cash">Cash</Tabs.Trigger>
 					</Tabs.List>
+
 					<Tabs.Content value="trade" class="space-y-2">
-						<!-- Trade offer section -->
 						<p>Select items to include in your trade offer:</p>
-						<!-- Add a list or grid of user's items to select for trade -->
-						<Button>Send Trade Offer</Button>
-					</Tabs.Content>
-					<Tabs.Content value="cash" class="space-y-2">
-						<!-- Cash offer section -->
-						<p>Enter your cash offer:</p>
-						<!-- Add an input field for cash offer amount -->
-						<Button>Send Cash Offer</Button>
+						{#if data.myItems && data.myItems.length !== 0}
+							<form action="?/submitTrade" method="POST" use:enhance>
+								<Select.Root multiple>
+									<Select.Trigger class="w-full">
+										<Select.Value placeholder="Select your item(s)" />
+									</Select.Trigger>
+									<Select.Content>
+										<Select.Group>
+											<Select.Label>Your Items</Select.Label>
+											{#each data.myItems as item}
+												<Select.Item class="h-24 gap-4" value={item.id}>
+													<img
+														src={item.image_urls}
+														alt={item.title}
+														class="h-16 w-16 object-cover"
+													/>
+													{item.title}
+												</Select.Item>
+											{/each}
+										</Select.Group>
+									</Select.Content>
+									<Select.Input name="tradeIds" />
+								</Select.Root>
+								<Button type="submit">Submit Trade</Button>
+							</form>
+						{/if}
 					</Tabs.Content>
 				</Tabs.Root>
 			</Card.Content>
