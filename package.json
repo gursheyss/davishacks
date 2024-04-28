@@ -45,7 +45,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-svelte": "^8.0.2",
-    "lucide-svelte": "0.375.0",
+    "lucide-svelte": "^0.376.1",
     "mode-watcher": "^0.3.0",
     "svelte-sonner": "^0.3.22",
     "tailwind-merge": "^2.3.0",
