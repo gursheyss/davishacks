@@ -5,10 +5,11 @@
 	import { Toaster } from 'svelte-sonner';
 
 	let { data } = $props();
+	let { supabase } = $derived(data);
 	let signedIn = $derived(!!data.session?.user);
 </script>
 
-<Header {signedIn}></Header>
+<Header {signedIn} {supabase}></Header>
 <Toaster></Toaster>
 <ModeWatcher></ModeWatcher>
 <slot></slot>

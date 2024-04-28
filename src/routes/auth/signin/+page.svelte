@@ -12,7 +12,7 @@
 	let email = $state('');
 
 	async function signIn() {
-		const { data, error: authError } = await supabase.auth.signInWithOtp({
+		const { error: authError } = await supabase.auth.signInWithOtp({
 			email: email
 		});
 
