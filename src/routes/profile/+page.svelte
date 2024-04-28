@@ -38,7 +38,7 @@
 				</p>
 				<p class="text-xl text-gray-500">Location: {profileData?.location}</p>
 				<Dialog.Root>
-					<Dialog.Trigger class={buttonVariants()}>Edit Profile</Dialog.Trigger>
+					<Dialog.Trigger class='mt-4 {buttonVariants()}'>Edit Profile</Dialog.Trigger>
 					<Dialog.Content>
 						<Dialog.Header>
 							<Dialog.Title>Edit profile</Dialog.Title>
@@ -52,5 +52,6 @@
 				</Dialog.Root>
 			</div>
 		</div>
+		<ItemsList items={profileData?.items} />
 	</div>
 </div>
