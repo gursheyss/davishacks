@@ -37,6 +37,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@supabase/auth-helpers-sveltekit": "^0.13.0",
+    "@supabase/ssr": "^0.3.0",
     "bits-ui": "^0.21.5",
     "clsx": "^2.1.1",
     "mode-watcher": "^0.3.0",
