@@ -11,5 +11,5 @@
 
 <ModeWatcher defaultMode={'dark'}></ModeWatcher>
 <Header {signedIn} {supabase}></Header>
-<Toaster theme={'dark'}></Toaster>
+<Toaster position={'top-right'} theme={'dark'}></Toaster>
 <slot></slot>
