@@ -1,8 +1,7 @@
 <script lang="ts">
 	import EditProfile from '$lib/components/EditProfile.svelte';
 	import ItemsList from '$lib/components/ItemsList.svelte';
-	import { fade, blur } from 'svelte/transition';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog';
 
 	interface Item {
@@ -18,12 +17,6 @@
 
 	let { data } = $props();
 	let { profileData } = $derived(data);
-
-	let showModal = $state(false);
-
-	function toggleModal() {
-		showModal = !showModal;
-	}
 </script>
 
 <div>

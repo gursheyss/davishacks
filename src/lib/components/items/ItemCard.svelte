@@ -30,16 +30,16 @@
   on:keypress={handleItemClick}
 >
   <div class="card-body relative">
-    <div class="flex items-center justify-between">
-      <div>
-        <div class="relative rounded-xl">
+    <div class="flex items-center justify-between w-full">
+      <div class="w-full">
+        <div class="relative w-full rounded-xl">
           {#if item.image_urls && item.image_urls.length > 0}
             <div class="h-48 w-full rounded-lg overflow-hidden">
-              <div class="relative w-full h-auto">
+              <div class="w-full">
                 <img
                   src={item.image_urls[0]}
                   alt={item.title}
-                  class="w-full h-full object-position-center"
+                  class="w-full"
                 />
               </div>
             </div>
@@ -57,7 +57,7 @@
             </div>
           {/if}
           <div
-            class="absolute rounded-lg text-center inset-0 bg-black bg-opacity-0 text-opacity-0 hover:bg-opacity-80 hover:text-opacity-100 transition-bg-opacity duration-150 flex items-center justify-center text-white"
+            class="absolute w-full rounded-lg text-center inset-0 bg-black bg-opacity-0 text-opacity-0 hover:bg-opacity-80 hover:text-opacity-100 transition-bg-opacity duration-150 flex items-center justify-center text-white"
           >
             {item.description}
           </div>
