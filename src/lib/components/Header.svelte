@@ -29,6 +29,11 @@
 			>Items</a
 		>
 		<a
+			href="/list"
+			class={$page.url.pathname === '/list' ? 'text-primary' : 'text-muted-foreground'}
+			>List Item</a
+		>
+		<a
 			href="/profile"
 			class={$page.url.pathname === '/profile' ? 'text-primary' : 'text-muted-foreground'}
 			>Profile</a
