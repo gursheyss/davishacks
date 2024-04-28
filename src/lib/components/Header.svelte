@@ -3,6 +3,7 @@
 	import LightSwitch from './LightSwitch.svelte';
 	import Button from './ui/button/button.svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
+	import { invalidateAll } from '$app/navigation';
 
 	let { signedIn, supabase }: { signedIn: boolean; supabase: SupabaseClient<any, 'public', any> } =
 		$props();
@@ -13,6 +14,8 @@
 		if (error) {
 			toast.error(error.message);
 		}
+
+		await invalidateAll();
 	}
 </script>
 
