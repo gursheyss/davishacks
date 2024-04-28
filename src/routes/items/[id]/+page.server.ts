@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, locals: { supabase, safeGetSession } }) => {
 	const session = await safeGetSession();
@@ -44,7 +45,34 @@ export const actions = {
 			error(401, 'Unauthorized');
 		}
 		const formData = await request.formData();
-		const tradeIds = formData.get('tradeIds');
-		console.log(formData);
+		const tradeIds = JSON.parse(formData.get('tradeIds'));
+		
+		const errors = [];
+		const insertions = [];
+
+		for (const tradeId of tradeIds) {
+			const insertion = await supabase
+				.from('trades')
+				.insert({
+					item_id: params.id,
+					offerer_id: session.user.id,
+					item_traded: tradeId,
+					status: 'Pending'
+				})
+				.then(({ data, error }) => {
+					if (error) {
+						errors.push(error);
+					}
+				});
+				insertions.push(insertion);
+		}
+
+		await Promise.all(insertions);
+
+		if (errors.length > 0) {
+			throw new Error('Failed to insert some trades.');  // Handle errors collectively
+		}
+
+		redirect(303, '/profile');
 	}
 };
