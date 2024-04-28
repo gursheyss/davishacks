@@ -36,6 +36,12 @@
 						 <div>
 							 <img src={item?.image_urls[0]} alt={item?.title} class="mask h-16 w-16 object-cover" />
 						 </div>
+					{:else}
+						<img
+							src="https://www.islandofworldpeace.ie/wp-content/uploads/2019/03/no-image.jpg"
+							alt="no pic"
+							class="mask h-16 w-16 object-cover"
+						/>
 					{/if}
 					<div>{item?.title}</div>
 					<div>{item?.category}</div>
