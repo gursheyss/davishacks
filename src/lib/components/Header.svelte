@@ -4,6 +4,7 @@
 	import Button from './ui/button/button.svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	let { signedIn, supabase }: { signedIn: boolean; supabase: SupabaseClient<any, 'public', any> } =
 		$props();
@@ -21,6 +22,18 @@
 
 <div class="flex items-center justify-between p-2">
 	<a href='/' class="text-3xl font-bold">GrantMe</a>
+	<div class="flex flex-grow items-center justify-center space-x-6">
+		<a
+			href="/items"
+			class={$page.url.pathname === '/items' ? 'text-primary-background' : 'text-muted-foreground'}
+			>Items</a
+		>
+		<a
+			href="/profile"
+			class={$page.url.pathname === '/profile' ? 'text-primary' : 'text-muted-foreground'}
+			>Profile</a
+		>
+	</div>
 	<div class="flex items-center space-x-2">
 		{#if !signedIn}
 			<Button href="/auth/signin">Login</Button>
