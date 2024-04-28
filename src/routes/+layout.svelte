@@ -9,7 +9,7 @@
 	let signedIn = $derived(!!data.session?.user);
 </script>
 
-<ModeWatcher></ModeWatcher>
+<ModeWatcher defaultMode={'dark'}></ModeWatcher>
 <Header {signedIn} {supabase}></Header>
 <Toaster theme={'dark'}></Toaster>
 <slot></slot>

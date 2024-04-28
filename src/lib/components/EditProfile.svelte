@@ -7,6 +7,7 @@
 	import { enhance } from '$app/forms';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
+	import Map from './Map.svelte';
 
 	interface ProfileInfo {
 		email: string | undefined;
@@ -66,9 +67,10 @@
 				</div>
 			</div>
 		</Card.Content>
-		<Card.Footer class="flex justify-between">
-			<Button variant="outline">Cancel</Button>
+		<Card.Footer class="flex justify-end">
 			<Button type="submit">Save</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>
+
+<Map />
