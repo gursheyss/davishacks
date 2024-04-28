@@ -31,6 +31,7 @@
 		action="?/list"
 		enctype="multipart/form-data"
 		use:enhance={() => {
+			isLoading = true;
 			return async ({ result }) => {
 				if (result.type === 'success') {
 					isLoading = false;
@@ -46,7 +47,7 @@
 		<div class="grid gap-6">
 			<div>
 				<Label for="title" class="mb-1 block">Title</Label>
-				<Input id="title" name="title" placeholder="Title of your item" class="w-full" />
+				<Input id="title" name="title" required placeholder="Title of your item" class="w-full" />
 			</div>
 			<div>
 				<Label for="description" class="mb-1 block">Description</Label>
@@ -55,11 +56,12 @@
 					name="description"
 					placeholder="Description of your item"
 					class="w-full"
+					required
 				/>
 			</div>
 			<div>
 				<Label for="category" class="mb-1 block">Category</Label>
-				<Select.Root name="category" bind:selected>
+				<Select.Root name="category" bind:selected required>
 					<Select.Trigger id="category">
 						<Select.Value placeholder="Select a category" />
 					</Select.Trigger>
@@ -82,6 +84,7 @@
 					accept="image/*"
 					multiple
 					class="w-full pr-20"
+					required
 				/>
 			</div>
 			<div class="flex justify-end">
