@@ -6,6 +6,7 @@
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { toast } from 'svelte-sonner';
 	import Reload from 'svelte-radix/Reload.svelte';
+	import { Textarea } from '$lib/components/ui/textarea/index.js';
 
 	let isLoading = $state(false);
 
@@ -16,12 +17,21 @@
 		{ value: 'books', label: 'Books' },
 		{ value: 'other', label: 'Other' }
 	];
-	interface Category {
+
+	const conditions = [
+		{ value: 'new', label: 'New' },
+		{ value: 'like_new', label: 'Like New' },
+		{ value: 'good', label: 'Good' },
+		{ value: 'fair', label: 'Fair' },
+		{ value: 'used', label: 'Used' }
+	];
+	interface Select {
 		value: string | undefined;
 		label: string | undefined;
 	}
 
-	let selected: Category = $state({ value: undefined, label: undefined });
+	let selectedCategory: Select = $state({ value: undefined, label: undefined });
+	let selectedCondition: Select = $state({ value: undefined, label: undefined });
 </script>
 
 <div class="mx-auto max-w-md rounded-lg p-6">
@@ -51,17 +61,23 @@
 			</div>
 			<div>
 				<Label for="description" class="mb-1 block">Description</Label>
-				<Input
+				<Textarea
 					id="description"
 					name="description"
 					placeholder="Description of your item"
 					class="w-full"
 					required
+					minlength={25}
 				/>
+			</div>
+
+			<div class="relative w-full">
+				<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-2xl">$</span>
+				<Input type="number" min="0.01" step="0.01" placeholder="0.00" class="pl-8 text-2xl" />
 			</div>
 			<div>
 				<Label for="category" class="mb-1 block">Category</Label>
-				<Select.Root name="category" bind:selected required>
+				<Select.Root name="category" bind:selected={selectedCategory} required>
 					<Select.Trigger id="category">
 						<Select.Value placeholder="Select a category" />
 					</Select.Trigger>
@@ -73,7 +89,23 @@
 						{/each}
 					</Select.Content>
 				</Select.Root>
-				<input type="hidden" name="category" value={selected.value} />
+				<input type="hidden" name="category" value={selectedCategory.value} />
+			</div>
+			<div>
+				<Label for="condition" class="mb-1 block">Condition</Label>
+				<Select.Root name="condition" bind:selected={selectedCondition} required>
+					<Select.Trigger id="condition">
+						<Select.Value placeholder="Select a condition" />
+					</Select.Trigger>
+					<Select.Content>
+						{#each conditions as condition}
+							<Select.Item value={condition.value} label={condition.label}
+								>{condition.label}</Select.Item
+							>
+						{/each}
+					</Select.Content>
+				</Select.Root>
+				<input type="hidden" name="condition" value={selectedCondition.value} />
 			</div>
 			<div>
 				<Label for="images" class="mb-1 block">Images</Label>
@@ -88,13 +120,14 @@
 				/>
 			</div>
 			<div class="flex justify-end">
+				<Button disabled class="mr-2">Upload</Button>
 				{#if isLoading}
 					<Button disabled>
 						<Reload class="mr-2 h-4 w-4 animate-spin" />
 						Uploading...
 					</Button>
 				{:else}
-					<Button type="submit">Upload</Button>
+					<Button type="submit">Upload and List</Button>
 				{/if}
 			</div>
 		</div>

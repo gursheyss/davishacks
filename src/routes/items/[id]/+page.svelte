@@ -4,33 +4,35 @@
 	import type { CarouselAPI } from '$lib/components/ui/carousel/context.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
+	import { Input } from '$lib/components/ui/input';
 
 	let api: CarouselAPI;
-	let current = 0;
-	let count = 0;
+	let current = $state(0);
+	let count = $state(0);
 
-	$: if (api) {
+	$effect(() => {
 		count = api.scrollSnapList().length;
 		current = api.selectedScrollSnap() + 1;
 
 		api.on('select', () => {
 			current = api.selectedScrollSnap() + 1;
 		});
+	});
+
+	interface Item {
+		id: number;
+		profile_id: string;
+		title: string;
+		description: string;
+		category: string;
+		image_urls: string[];
+		status: string;
+		created_at: string;
 	}
 
-	// Example data
-	const item = {
-		id: 1,
-		profile_id: '107e6e99-ac29-4c5c-8ded-764dc0b27353',
-		title: 'Epic Bike',
-		description: 'A fuckin bike to let you ride around school',
-		category: 'Bike',
-		image_urls: [
-			'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969'
-		],
-		status: 'Available',
-		created_at: '2024-04-28T09:51:15.869674'
-	};
+	let { data } = $props();
+
+	let { item }: { item: Item } = $derived(data);
 </script>
 
 <div class="flex flex-col items-start justify-center gap-8 pl-6 md:flex-row">
@@ -72,20 +74,28 @@
 			<Card.Content>
 				<Tabs.Root value="trade" class="w-full">
 					<Tabs.List class="grid grid-cols-2">
-						<Tabs.Trigger value="trade">Trade Offer</Tabs.Trigger>
-						<Tabs.Trigger value="cash">Cash Offer</Tabs.Trigger>
+						<Tabs.Trigger value="trade">Trade</Tabs.Trigger>
+						<Tabs.Trigger value="cash">Cash</Tabs.Trigger>
 					</Tabs.List>
 					<Tabs.Content value="trade" class="space-y-2">
-						<!-- Trade offer section -->
 						<p>Select items to include in your trade offer:</p>
-						<!-- Add a list or grid of user's items to select for trade -->
+						{JSON.stringify(data.myItems)}
 						<Button>Send Trade Offer</Button>
 					</Tabs.Content>
-					<Tabs.Content value="cash" class="space-y-2">
-						<!-- Cash offer section -->
-						<p>Enter your cash offer:</p>
-						<!-- Add an input field for cash offer amount -->
-						<Button>Send Cash Offer</Button>
+					<Tabs.Content value="cash">
+						<div class="flex flex-col items-center space-y-4">
+							<div class="relative w-full max-w-xs">
+								<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-2xl">$</span>
+								<Input
+									type="number"
+									min="0.01"
+									step="0.01"
+									placeholder="0.00"
+									class="pl-8 text-2xl"
+								/>
+							</div>
+							<Button class="w-full max-w-xs">Send Cash Offer</Button>
+						</div>
 					</Tabs.Content>
 				</Tabs.Root>
 			</Card.Content>
