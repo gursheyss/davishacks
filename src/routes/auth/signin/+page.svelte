@@ -24,18 +24,20 @@
 	}
 </script>
 
-<Card.Root class="w-full max-w-sm">
-	<Card.Header>
-		<Card.Title class="text-2xl">Login</Card.Title>
-		<Card.Description>Enter your email below to login to your account.</Card.Description>
-	</Card.Header>
-	<Card.Content class="grid gap-4">
-		<div class="grid gap-2">
-			<Label for="email">Email</Label>
-			<Input id="email" bind:value={email} type="email" placeholder="m@example.com" required />
-		</div>
-	</Card.Content>
-	<Card.Footer>
-		<Button on:click={signIn} class="w-full">Sign in</Button>
-	</Card.Footer>
-</Card.Root>
+<div class="flex items-center justify-center pt-6">
+	<Card.Root class="w-full max-w-sm">
+		<Card.Header>
+			<Card.Title class="text-2xl">Login</Card.Title>
+			<Card.Description>Enter your email below to login to your account.</Card.Description>
+		</Card.Header>
+		<Card.Content class="grid gap-4">
+			<div class="grid gap-2">
+				<Label for="email">Email</Label>
+				<Input id="email" bind:value={email} type="email" placeholder="m@example.com" required />
+			</div>
+		</Card.Content>
+		<Card.Footer>
+			<Button on:click={signIn} class="w-full">Sign in</Button>
+		</Card.Footer>
+	</Card.Root>
+</div>

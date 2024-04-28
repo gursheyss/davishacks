@@ -3,9 +3,12 @@
 	import '../app.pcss';
 	import Header from '$lib/components/Header.svelte';
 	import { Toaster } from 'svelte-sonner';
+
+	let { data } = $props();
+	let signedIn = $derived(!!data.session?.user);
 </script>
 
-<Header></Header>
+<Header {signedIn}></Header>
 <Toaster></Toaster>
 <ModeWatcher></ModeWatcher>
 <slot></slot>
