@@ -17,7 +17,7 @@
 </script>
 
 <div class="flex items-center justify-between p-2">
-	<h1 class="text-3xl font-bold">GrantMe</h1>
+	<a href='/' class="text-3xl font-bold">GrantMe</a>
 	<div class="flex items-center space-x-2">
 		{#if !signedIn}
 			<Button href="/auth/signin">Login</Button>
