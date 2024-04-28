@@ -45,5 +45,6 @@ export const actions = {
 		}
 		const formData = await request.formData();
 		const tradeIds = formData.get('tradeIds');
+		console.log(formData);
 	}
 };

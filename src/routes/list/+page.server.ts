@@ -61,7 +61,7 @@ export const actions = {
 			);
 		}
 
-		console.log('imageUrls:', imageUrls);
+		// console.log('imageUrls:', imageUrls);
 
 		const { error: updateError } = await supabase
 			.from('items')

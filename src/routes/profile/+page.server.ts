@@ -13,7 +13,7 @@ export const load = async ({ locals: { safeGetSession, supabase } }) => {
 		.eq('email', email)
 		.single();
 
-	console.log(data);
+	// console.log(data);
 
 	if (error) {
 		console.error('error', error);
@@ -26,7 +26,7 @@ export const load = async ({ locals: { safeGetSession, supabase } }) => {
 
 export const actions = {
 	editProfile: async ({ request, locals: { supabase, safeGetSession } }) => {
-		console.log('editProfile action');
+		// console.log('editProfile action');
 		const session = await safeGetSession();
 		if (!session.user) {
 			redirect(301, '/auth/signin');
@@ -37,8 +37,8 @@ export const actions = {
 		const firstName = formData.get('firstName');
 		const lastName = formData.get('lastName');
 
-		console.log('firstName:', firstName);
-		console.log('lastName:', lastName);
+		// console.log('firstName:', firstName);
+		// console.log('lastName:', lastName);
 
 		const { error: dbError } = await supabase
 			.from('profiles')
