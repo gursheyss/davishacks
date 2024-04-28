@@ -7,20 +7,46 @@ export const load = async ({ locals: { safeGetSession, supabase } }) => {
 	}
 	const email = session.user.email;
 
-	const { data, error } = await supabase
+	const { data: profileData, error } = await supabase
 		.from('profiles')
 		.select('first_name, last_name, email, location, school, items!profile_id (*)')
 		.eq('email', email)
 		.single();
 
-	// console.log(data);
+		const itemIds = profileData.items.map(item => item.id);
 
 	if (error) {
 		console.error('error', error);
 	}
 
+	const { data: tradeData, error: tradeError } = await supabase
+        .from('trades')
+        .select('*')
+        .in('item_traded', itemIds); // Assuming 'item_traded' is related to user's ID
+
+    if (tradeError) {
+        console.error('error', tradeError);
+    }
+
+		const fullItemDetails = await Promise.all(tradeData.map(async trade => {
+			const { data: itemData, error: itemError } = await supabase
+					.from('items')
+					.select('*')
+					.eq('id', trade.item_traded)
+					.single(); // Assuming that item_traded corresponds to the id in items table
+			
+			if (itemError) {
+					console.error('Error fetching item details:', itemError);
+					return null; // Handle the error appropriately, perhaps returning null or an error state
+			}
+
+			return { ...trade, itemDetails: itemData };
+	}));
+
+	console.log(fullItemDetails);	
 	return {
-		profileData: data
+		profileData,
+		tradeData: fullItemDetails
 	};
 };
 

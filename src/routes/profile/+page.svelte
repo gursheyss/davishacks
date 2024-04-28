@@ -1,6 +1,7 @@
 <script lang="ts">
 	import EditProfile from '$lib/components/EditProfile.svelte';
 	import ItemsList from '$lib/components/ItemsList.svelte';
+	import TradesList from '$lib/components/TradesList.svelte';
 	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog';
 
@@ -15,8 +16,18 @@
 		created_at: string;
 	}
 
+	interface Trade {
+    id: number;
+    item_id: number;
+    item_traded: number[];
+    offerer_id: string;
+    status?: string;
+		itemDetails: Item[];
+  }
+
 	let { data } = $props();
 	let { profileData } = $derived(data);
+	let { tradeData }: { trades: Trade[] } = $derived(data);
 </script>
 
 <div>
@@ -46,5 +57,6 @@
 			</div>
 		</div>
 		<ItemsList items={profileData?.items} />
+		<TradesList trades={tradeData} />
 	</div>
 </div>

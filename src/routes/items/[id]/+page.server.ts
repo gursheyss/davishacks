@@ -69,6 +69,12 @@ export const actions = {
 
 		await Promise.all(insertions);
 
+		// set status to 'Pending' for each item in tradeIds and item_id
+		const { data: itemData, error: dbError } = await supabase
+			.from('items')
+			.update({ status: 'Pending' })
+			.in('id', [params.id, ...tradeIds]);
+
 		if (errors.length > 0) {
 			throw new Error('Failed to insert some trades.');  // Handle errors collectively
 		}
