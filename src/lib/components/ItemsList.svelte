@@ -3,41 +3,18 @@
 	import { Trash } from 'svelte-radix';
 	import * as Card from '$lib/components/ui/card/index.js';
 
-	const items = [
-		{
-			image:
-				'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969',
-			title: 'Super cool black bike',
-			category: 'Bikes',
-			status: 'Listed',
-			createdAt: startOfDay(sub(new Date(), { days: 1 }))
-		},
-		{
-			image:
-				'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969',
-			title: 'Super cool black bike 2',
-			category: 'Bikes',
-			status: 'Listed',
-			createdAt: startOfDay(sub(new Date(), { days: 1 }))
-		},
-		{
-			image:
-				'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969',
-			title: 'Super cool black bike 3',
-			category: 'Bikes',
-			status: 'Listed',
-			createdAt: startOfDay(sub(new Date(), { days: 1 }))
-		},
-		{
-			image:
-				'https://www.statebicycle.com/cdn/shop/products/6061-eBikeCommuter-MatteBlack_1.jpg?v=1684443969',
-			title: 'Super cool black bike 4',
-			category: 'Bikes',
-			status: 'Listed',
-			createdAt: startOfDay(sub(new Date(), { days: 1 }))
-		}
-		// ... more items ...
-	];
+	interface Item {
+    id: number;
+    profile_id: string;
+    title: string;
+    description: string;
+    category: string;
+    image_urls?: string[];
+    status?: string;
+    created_at: string;
+  };
+
+	const { items }: { items: Item[] } = $props();
 </script>
 
 <h1 class="mb-4 text-3xl font-bold">Items</h1>
@@ -53,15 +30,17 @@
 			</div>
 		</Card.Header>
 		<Card.Content>
-			{#each items as item (item.title)}
+			{#each items as item (item?.title)}
 				<div class="grid grid-cols-6 items-center gap-4 border-t px-4 py-2">
-					<div>
-						<img src={item.image} alt={item.title} class="mask h-16 w-16 object-cover" />
-					</div>
-					<div>{item.title}</div>
-					<div>{item.category}</div>
-					<div>{item.status}</div>
-					<div>{formatDistanceToNow(item.createdAt)} ago</div>
+					{#if item?.image_urls && item?.image_urls.length > 0}
+						 <div>
+							 <img src={item?.image_urls[0]} alt={item?.title} class="mask h-16 w-16 object-cover" />
+						 </div>
+					{/if}
+					<div>{item?.title}</div>
+					<div>{item?.category}</div>
+					<div>{item?.status}</div>
+					<div>{formatDistanceToNow(item?.created_at)} ago</div>
 					<div class="flex justify-end"><Trash /></div>
 				</div>
 			{/each}
