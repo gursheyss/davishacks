@@ -17,6 +17,15 @@ export const load = async ({ params, locals: { supabase, safeGetSession } }) => 
 			.from('items')
 			.select('id, title, image_urls, value')
 			.eq('profile_id', session.user.id);
+
+		if (profileData) {
+			profileData.forEach((item) => {
+				if (item.image_urls && item.image_urls.length > 0) {
+					item.image_urls = [item.image_urls[0]];
+				}
+			});
+		}
+
 		return {
 			item: itemData,
 			myItems: profileData
@@ -26,4 +35,15 @@ export const load = async ({ params, locals: { supabase, safeGetSession } }) => 
 	return {
 		item: itemData
 	};
+};
+
+export const actions = {
+	submitTrade: async ({ request, params, locals: { supabase, safeGetSession } }) => {
+		const session = await safeGetSession();
+		if (!session.user) {
+			error(401, 'Unauthorized');
+		}
+		const formData = await request.formData();
+		const tradeIds = formData.get('tradeIds');
+	}
 };

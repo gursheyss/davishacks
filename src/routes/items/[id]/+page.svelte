@@ -5,19 +5,8 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import { Input } from '$lib/components/ui/input';
-
-	let api: CarouselAPI;
-	let current = $state(0);
-	let count = $state(0);
-
-	$effect(() => {
-		count = api.scrollSnapList().length;
-		current = api.selectedScrollSnap() + 1;
-
-		api.on('select', () => {
-			current = api.selectedScrollSnap() + 1;
-		});
-	});
+	import * as Select from '$lib/components/ui/select/index.js';
+	import { enhance } from '$app/forms';
 
 	interface Item {
 		id: number;
@@ -33,11 +22,13 @@
 	let { data } = $props();
 
 	let { item }: { item: Item } = $derived(data);
+
+	let selectedItems = $state([]);
 </script>
 
 <div class="flex flex-col items-start justify-center gap-8 pl-6 md:flex-row">
 	<div class="w-full md:w-1/2">
-		<Carousel.Root bind:api class="relative h-64 w-full">
+		<Carousel.Root class="relative h-64 w-full">
 			<Carousel.Content>
 				{#each item.image_urls as url}
 					<Carousel.Item>
@@ -48,9 +39,6 @@
 			<Carousel.Previous />
 			<Carousel.Next />
 		</Carousel.Root>
-		<div class="py-2 text-center text-sm text-muted-foreground">
-			Image {current} of {count}
-		</div>
 	</div>
 	<div class="w-full space-y-6 md:w-1/2">
 		<Card.Root>
@@ -77,25 +65,35 @@
 						<Tabs.Trigger value="trade">Trade</Tabs.Trigger>
 						<Tabs.Trigger value="cash">Cash</Tabs.Trigger>
 					</Tabs.List>
+
 					<Tabs.Content value="trade" class="space-y-2">
 						<p>Select items to include in your trade offer:</p>
-						{JSON.stringify(data.myItems)}
-						<Button>Send Trade Offer</Button>
-					</Tabs.Content>
-					<Tabs.Content value="cash">
-						<div class="flex flex-col items-center space-y-4">
-							<div class="relative w-full max-w-xs">
-								<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-2xl">$</span>
-								<Input
-									type="number"
-									min="0.01"
-									step="0.01"
-									placeholder="0.00"
-									class="pl-8 text-2xl"
-								/>
-							</div>
-							<Button class="w-full max-w-xs">Send Cash Offer</Button>
-						</div>
+						{#if data.myItems && data.myItems.length !== 0}
+							<form action="?/submitTrade" method="POST" use:enhance>
+								<Select.Root multiple>
+									<Select.Trigger class="w-full">
+										<Select.Value placeholder="Select your item(s)" />
+									</Select.Trigger>
+									<Select.Content>
+										<Select.Group>
+											<Select.Label>Your Items</Select.Label>
+											{#each data.myItems as item}
+												<Select.Item class="h-24 gap-4" value={item.id}>
+													<img
+														src={item.image_urls}
+														alt={item.title}
+														class="h-16 w-16 object-cover"
+													/>
+													{item.title}
+												</Select.Item>
+											{/each}
+										</Select.Group>
+									</Select.Content>
+									<Select.Input name="tradeIds" />
+								</Select.Root>
+								<Button type="submit">Submit Trade</Button>
+							</form>
+						{/if}
 					</Tabs.Content>
 				</Tabs.Root>
 			</Card.Content>
