@@ -17,7 +17,7 @@
 	const { items }: { items: Item[] } = $props();
 </script>
 
-<h1 class="mb-4 text-3xl font-bold">Items</h1>
+<h1 class="text-center mb-4 text-3xl font-bold mt-8">Items</h1>
 <div class="grid grid-cols-1 gap-4">
 	<Card.Root class="w-full">
 		<Card.Header>
