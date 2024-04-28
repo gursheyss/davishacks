@@ -21,7 +21,7 @@
 </script>
 
 <div class="flex items-center justify-between p-2">
-	<h1 class="text-3xl font-bold">GrantMe</h1>
+	<a href='/' class="text-3xl font-bold">GrantMe</a>
 	<div class="flex flex-grow items-center justify-center space-x-6">
 		<a
 			href="/items"
@@ -32,6 +32,11 @@
 			href="/profile"
 			class={$page.url.pathname === '/profile' ? 'text-primary' : 'text-muted-foreground'}
 			>Profile</a
+		>
+		<a
+			href="/about"
+			class={$page.url.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'}
+			>About</a
 		>
 	</div>
 	<div class="flex items-center space-x-2">
